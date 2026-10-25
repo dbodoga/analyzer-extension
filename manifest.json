@@ -3,8 +3,15 @@
   "description": "N/A",
   "version": "1.0",
   "manifest_version": 3,
+  "icons": {
+    "48": "https.png"
+  },
   "action": {
     "default_popup": "analyzer.html",
-    "default_icon": "https.png"
+    "default_icon": {
+      "16": "https.png",
+      "32": "https.png",
+      "48": "https.png"
+    }
   }
 }
