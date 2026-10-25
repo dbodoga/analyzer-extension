@@ -1,0 +1,10 @@
+{
+  "name": "HTTP/HTTPS Analyzer",
+  "description": "N/A",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "analyzer.html",
+    "default_icon": "https.png"
+  }
+}
