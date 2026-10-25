@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>HTTP/HTTPS Analyzer</title>
+  <link rel="stylesheet" href="analyzer.css">
+</head>
+<body>
+  <main class="analyzer">
+    <header>
+      <h1>HTTP/HTTPS Analyzer</h1>
+      <p>Introdu adresa site-ului pe care vrei să îl analizezi.</p>
+    </header>
+
+    <form id="url-form">
+      <label for="url-input">Adresa site-ului</label>
+      <input
+        id="url-input"
+        name="url"
+        type="url"
+        placeholder="https://exemplu.ro"
+        autocomplete="url"
+        required
+      >
+      <button type="submit">Analizează</button>
+    </form>
+
+    <p id="status" role="status" aria-live="polite">
+      Introdu un link pentru a începe.
+    </p>
+  </main>
+
+  <script src="analyzer.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+body {
+  width: 320px;
+  margin: 0;
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  color: #222;
+}
+
+h1 {
+  font-size: 18px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+input,
+button {
+  padding: 10px;
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+#status {
+  font-size: 13px;
+}
