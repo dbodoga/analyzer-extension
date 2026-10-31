@@ -1,5 +1,5 @@
 body {
-  width: 320px;
+  width: 480px;
   margin: 0;
   padding: 16px;
   font-family: Arial, sans-serif;
@@ -27,5 +27,14 @@ button {
 }
 
 #status {
+  font-size: 13px;
+}
+
+.info-site {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
   font-size: 13px;
 }
