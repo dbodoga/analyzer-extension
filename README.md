@@ -11,11 +11,4 @@ Extensie Chrome aflată în dezvoltare. Interfața permite introducerea adresei 
 5. Selectează folderul proiectului, cel care conține `manifest.json`.
 6. Apasă iconița extensiei din bara Chrome pentru a deschide Analyzer.
 
-## Fișierele extensiei
-
-- `manifest.json` — configurarea extensiei.
-- `analyzer.html` — interfața Analyzer.
-- `analyzer.css` — stilurile interfeței.
-- `analyzer.js` — comportamentul interfeței.
-
 > Proiectul este în faza de prototipare. Analiza cererilor HTTP/HTTPS va fi adăugată ulterior.
