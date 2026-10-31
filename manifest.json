@@ -1,6 +1,11 @@
 {
+  "permissions": ["webRequest", "storage", "activeTab"],
+  "host_permissions": ["https://example.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "name": "HTTP/HTTPS Analyzer",
-  "description": "N/A",
+  "description": "Extensie de browser pentru analizarea cererilor HTTP/HTTPS și identificarea comportamentelor potențial suspecte",
   "version": "1.0",
   "manifest_version": 3,
   "icons": {
@@ -8,10 +13,6 @@
   },
   "action": {
     "default_popup": "analyzer.html",
-    "default_icon": {
-      "16": "https.png",
-      "32": "https.png",
-      "48": "https.png"
-    }
+    "default_icon": "https.png"
   }
 }
