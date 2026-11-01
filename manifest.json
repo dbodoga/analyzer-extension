@@ -1,6 +1,6 @@
 {
-  "permissions": ["webRequest", "storage", "activeTab"],
-  "host_permissions": ["https://example.com/*"],
+  "permissions": ["webRequest", "storage", "activeTab", "tabs"],
+  "host_permissions": ["http://*/*", "https://*/*"],
   "background": {
     "service_worker": "background.js"
   },
