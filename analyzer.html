@@ -9,7 +9,10 @@
 <body>
   <main class="analyzer">
     <header>
+      <div class="antet">
       <h1>HTTP/HTTPS Analyzer</h1>
+      <button id="refresh" type="button" title="Reîncarcă site-ul">↻</button>
+    </div>
 
       <div class="info-site">
         <span>Host: <strong id="site-host">—</strong></span>
@@ -26,8 +29,8 @@
       <input
         id="url-input"
         name="url"
-        type="url"
-        placeholder="https://exemplu.ro"
+        type="text"
+        placeholder="https://example.com"
         autocomplete="url"
         required
       >
@@ -38,8 +41,35 @@
       Introdu un link pentru a începe.
     </p>
 
-    <h2>Cereri capturate</h2>
-    <ul id="lista-cereri"></ul>
+    <div class="antet-cereri">
+      <h2>Cereri capturate</h2>
+      <span id="statistici">0 requests | — seconds</span>
+    </div>
+    <div class="container-tabel">
+      <table id="tabel-cereri">
+        <colgroup>
+          <col style="width: 70px">
+          <col style="width: 160px">
+          <col style="width: 210px">
+          <col style="width: 70px">
+          <col style="width: 70px">
+          <col style="width: 100px">
+          <col style="width: 80px">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Request domain</th>
+            <th>Request name</th>
+            <th>Method</th>
+            <th>Status</th>
+            <th>Type</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="lista-cereri"></tbody>
+      </table>
+    </div>
   </main>
 
   <script src="analyzer.js" defer></script>
