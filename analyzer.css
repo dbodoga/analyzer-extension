@@ -1,24 +1,29 @@
 body {
-  width: 480px;
+  width: 760px;
   margin: 0;
-  padding: 16px;
   font-family: Arial, sans-serif;
-  color: #222;
+  font-size: 13px;
+  color: #333;
+  background: #eee;
+}
+
+.antet {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  color: white;
+  background: #444;
 }
 
 h1 {
-  font-size: 18px;
+  margin: 0;
+  font-size: 15px;
+  font-weight: normal;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-input,
-button {
-  padding: 10px;
+button,
+input {
   font: inherit;
 }
 
@@ -26,15 +31,106 @@ button {
   cursor: pointer;
 }
 
-#status {
-  font-size: 13px;
+#refresh {
+  padding: 2px 8px;
 }
 
 .info-site {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 12px;
-  padding: 10px 0;
+  gap: 8px 16px;
+  padding: 10px;
+  background: #f5f5f5;
   border-bottom: 1px solid #ccc;
+}
+
+header p,
+#status {
+  margin: 10px;
+}
+
+form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+}
+
+form input {
+  flex: 1;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid #aaa;
+}
+
+form button {
+  padding: 6px 12px;
+}
+
+.antet-cereri {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 10px;
+  background: #cacaca;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.antet-cereri h2 {
+  margin: 0;
   font-size: 13px;
+}
+
+#statistici {
+  font-size: 12px;
+}
+
+.container-tabel {
+  max-height: 300px;
+  overflow: auto;
+}
+
+table {
+  width: 760px;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: 6px;
+  border-bottom: 1px solid #ddd;
+  border-right: 1px solid #ccc;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+th {
+  position: relative;
+  background: #ddd;
+}
+
+tbody tr:nth-child(odd) {
+  background: #f8f8f8;
+}
+
+tbody tr:nth-child(even) {
+  background: #eee;
+}
+
+.cerere-eroare {
+  color: red;
+}
+
+.redimensionare {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 100%;
+  cursor: col-resize;
+  touch-action: none;
 }
