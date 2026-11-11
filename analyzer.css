@@ -82,10 +82,6 @@ form button {
   font-size: 13px;
 }
 
-#statistici {
-  font-size: 12px;
-}
-
 .container-tabel {
   max-height: 300px;
   overflow: auto;
@@ -133,4 +129,23 @@ tbody tr:nth-child(even) {
   height: 100%;
   cursor: col-resize;
   touch-action: none;
+}
+
+.bara-filtru {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+
+#filtru {
+  flex: 1;
+  min-width: 0;
+  padding: 6px;
+  border: 1px solid #aaa;
+}
+
+#statistici {
+  white-space: nowrap;
+  font-size: 12px;
 }
