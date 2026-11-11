@@ -93,6 +93,8 @@ formular.addEventListener("submit", (e) => {
 
 const listaCereri = document.getElementById("lista-cereri");
 
+const campFiltru = document.getElementById("filtru");
+
 function afiseazaCereri() {
     chrome.tabs.query({ active: true, currentWindow: true }, (file) => {
         const fila = file[0];
@@ -118,8 +120,76 @@ function afiseazaCereri() {
             listaCereri.innerHTML = "";
 
             for (const cerere of cereri) {
-                // Cererile salvate în formatul vechi erau texte.
+                
+                // Ignorăm cererile salvate în formatul vechi.
                 if (typeof cerere === "string") continue;
+
+                const textFiltru = campFiltru.value.trim().toLowerCase();
+
+                // Separăm filtrele după spații.
+                const filtre = textFiltru.split(/\s+/).filter(Boolean);
+
+                const sePotriveste = filtre.every((filtru) => {
+                    const pozitieSeparator = filtru.indexOf(":");
+
+                    let categorie = "";
+                    let cautare = filtru;
+
+                    if (pozitieSeparator !== -1) {
+                        categorie = filtru.slice(0, pozitieSeparator);
+                        cautare = filtru.slice(pozitieSeparator + 1);
+                    }
+
+                    let valoare;
+
+                    switch (categorie) {
+                        case "id":
+                            valoare = String(cerere.id);
+                            break;
+
+                        case "domain":
+                            valoare = String(cerere.domeniu);
+                            break;
+
+                        case "name":
+                            valoare = String(cerere.nume);
+                            break;
+
+                        case "method":
+                            valoare = String(cerere.metoda);
+                            break;
+
+                        case "status":
+                            valoare = String(cerere.status);
+                            break;
+
+                        case "type":
+                            valoare = String(cerere.tip);
+                            break;
+
+                        case "time":
+                            valoare = cerere.timp === null ? "—" : String(cerere.timp);
+                            break;
+
+                        default:
+                            cautare = filtru;
+                            valoare = [
+                                cerere.id,
+                                cerere.domeniu,
+                                cerere.nume,
+                                cerere.metoda,
+                                cerere.status,
+                                cerere.tip,
+                                cerere.timp === null ? "—" : cerere.timp + " ms"
+                            ].join(" ");
+                    }
+
+                    return valoare.toLowerCase().includes(cautare);
+                });
+
+                if (!sePotriveste) {
+                    continue;
+                }
 
                 const rand = document.createElement("tr");
 
@@ -151,6 +221,8 @@ function afiseazaCereri() {
 
 // Afișează cererile când se deschide extensia.
 afiseazaCereri();
+
+campFiltru.addEventListener("input", afiseazaCereri);
 
 // Actualizează lista când se salvează cereri noi.
 chrome.storage.onChanged.addListener((schimbari, zona) => {
@@ -201,5 +273,20 @@ antete.forEach((antet, index) => {
         maner.addEventListener("pointermove", redimensioneaza);
         maner.addEventListener("pointerup", opreste);
         maner.addEventListener("pointercancel", opreste);
+    });
+});
+
+const butonClear = document.getElementById("clear");
+
+butonClear.addEventListener("click", () => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (file) => {
+        const fila = file[0];
+
+        if (!fila) return;
+
+        chrome.runtime.sendMessage({
+            actiune: "clear",
+            tabId: fila.id
+        });
     });
 });
