@@ -134,3 +134,28 @@ chrome.tabs.onUpdated.addListener((tabId, schimbari) => {
         }
     });
 });
+
+chrome.runtime.onMessage.addListener((mesaj) => {
+    if (mesaj.actiune !== "clear") return;
+
+    const cheieCereri = "cereri_" + mesaj.tabId;
+    const cheieStatistici = "statistici_" + mesaj.tabId;
+
+    adaugaInCoada(async () => {
+        const data = await chrome.storage.local.get(cheieStatistici);
+        const statistici = data[cheieStatistici];
+
+        if (statistici) {
+            statistici.numar = 0;
+
+            await chrome.storage.local.set({
+                [cheieCereri]: [],
+                [cheieStatistici]: statistici
+            });
+        } else {
+            await chrome.storage.local.set({
+                [cheieCereri]: []
+            });
+        }
+    });
+});
