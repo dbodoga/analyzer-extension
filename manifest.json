@@ -1,5 +1,5 @@
 {
-  "permissions": ["webRequest", "storage", "activeTab", "tabs"],
+  "permissions": ["webRequest", "storage", "activeTab", "tabs", "downloads"],
   "host_permissions": ["http://*/*", "https://*/*"],
   "background": {
     "service_worker": "background.js"
