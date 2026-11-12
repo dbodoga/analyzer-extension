@@ -290,3 +290,101 @@ butonClear.addEventListener("click", () => {
         });
     });
 });
+
+const butonExport = document.getElementById("export-csv");
+const formatExport = document.getElementById("format-export");
+
+butonExport.addEventListener("click", async () => {
+    try {
+        const file = await chrome.tabs.query({
+            active: true,
+            currentWindow: true
+        });
+
+        const fila = file[0];
+
+        if (!fila) {
+            mesaj.textContent = "Nu am putut identifica fila curentă.";
+            return;
+        }
+
+        const cheieCereri = "cereri_" + fila.id;
+        const date = await chrome.storage.local.get(cheieCereri);
+
+        const cereri = (date[cheieCereri] || [])
+            .filter((cerere) => typeof cerere !== "string");
+
+        if (cereri.length === 0) {
+            mesaj.textContent = "Nu există cereri de exportat.";
+            return;
+        }
+
+        const format = formatExport.value;
+        let continut;
+        let tipFisier;
+
+        if (format === "json") {
+            continut = JSON.stringify(cereri, null, 2);
+            tipFisier = "application/json;charset=utf-8";
+        } else {
+            const antet = [
+                "ID",
+                "Request domain",
+                "Request name",
+                "Method",
+                "Status",
+                "Type",
+                "Time (ms)"
+            ];
+
+            const randuri = cereri.map((cerere) => [
+                cerere.id,
+                cerere.domeniu,
+                cerere.nume,
+                cerere.metoda,
+                cerere.status,
+                cerere.tip,
+                cerere.timp
+            ]);
+
+            function valoareCSV(valoare) {
+                let text = String(valoare ?? "");
+
+                if (/^[\s]*[=+\-@]/.test(text)) {
+                    text = "'" + text;
+                }
+
+                if (/[",\r\n]/.test(text)) {
+                    return '"' + text.replace(/"/g, '""') + '"';
+                }
+
+                return text;
+            }
+
+            continut = "\uFEFF" + [antet, ...randuri]
+                .map((rand) => rand.map(valoareCSV).join(","))
+                .join("\r\n");
+
+            tipFisier = "text/csv;charset=utf-8";
+        }
+
+        const fisier = new Blob([continut], { type: tipFisier });
+
+        const adresaFisier = await new Promise((resolve, reject) => {
+            const cititor = new FileReader();
+
+            cititor.onload = () => resolve(cititor.result);
+            cititor.onerror = () => reject(cititor.error);
+            cititor.readAsDataURL(fisier);
+        });
+
+        await chrome.downloads.download({
+            url: adresaFisier,
+            filename: "cereri." + format,
+            saveAs: true
+        });
+    } catch (eroare) {
+        console.error("Eroare la export:", eroare);
+        mesaj.textContent = "Nu s-a putut crea exportul.";
+    }
+});
