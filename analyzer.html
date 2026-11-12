@@ -10,15 +10,24 @@
   <main class="analyzer">
     <header>
       <div class="antet">
-      <h1>HTTP/HTTPS Analyzer</h1>
-      <button id="refresh" type="button" title="Reîncarcă site-ul">↻</button>
-    </div>
+        <h1>HTTP/HTTPS Analyzer</h1>
+        <button id="refresh" type="button" title="Reload">↻</button>
+      </div>
 
       <div class="info-site">
         <span>Host: <strong id="site-host">—</strong></span>
         <span>Protocol: <strong id="site-protocol">—</strong></span>
         <span>IP: <strong id="site-ip">—</strong></span>
         <span>Status: <strong id="site-status">—</strong></span>
+
+        <div class="butoane-export">
+          <select id="format-export" aria-label="Format export">
+            <option value="csv">CSV</option>
+            <option value="json">JSON</option>
+          </select>
+
+          <button id="export-csv" type="button" title="Export">⤓</button>
+        </div>
       </div>
 
       <p>Introdu adresa site-ului pe care vrei să îl analizezi.</p>
