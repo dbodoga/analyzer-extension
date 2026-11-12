@@ -37,6 +37,7 @@ button {
 
 .info-site {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
   gap: 8px 16px;
   padding: 10px;
@@ -148,4 +149,11 @@ tbody tr:nth-child(even) {
 #statistici {
   white-space: nowrap;
   font-size: 12px;
+}
+
+.butoane-export {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
 }
