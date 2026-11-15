@@ -95,6 +95,9 @@ const listaCereri = document.getElementById("lista-cereri");
 
 const campFiltru = document.getElementById("filtru");
 
+let coloanaSortare = null;
+let sortareCrescatoare = true;
+
 function afiseazaCereri() {
     chrome.tabs.query({ active: true, currentWindow: true }, (file) => {
         const fila = file[0];
@@ -107,6 +110,27 @@ function afiseazaCereri() {
 
         chrome.storage.local.get([cheie, cheieStatistici], (data) => {
             const cereri = data[cheie] || [];
+
+            if (coloanaSortare) {
+                cereri.sort((a, b) => {
+                    const valoareA = a[coloanaSortare];
+                    const valoareB = b[coloanaSortare];
+
+                    // Valorile lipsă rămân la sfârșit.
+                    if (valoareA == null && valoareB == null) return 0;
+                    if (valoareA == null) return 1;
+                    if (valoareB == null) return -1;
+
+                    const rezultat = String(valoareA).localeCompare(
+                        String(valoareB),
+                        undefined,
+                        { numeric: true, sensitivity: "base" }
+                    );
+
+                    return sortareCrescatoare ? rezultat : -rezultat;
+                });
+            }
+
             const statistici = data[cheieStatistici];
 
             const numar = statistici ? statistici.numar : 0;
@@ -240,6 +264,43 @@ butonRefresh.addEventListener("click", () => {
 const tabel = document.getElementById("tabel-cereri");
 const antete = tabel.querySelectorAll("th");
 const coloane = tabel.querySelectorAll("col");
+
+const campuriSortare = [
+    "id",
+    "domeniu",
+    "nume",
+    "metoda",
+    "status",
+    "tip",
+    "timp"
+];
+
+antete.forEach((antet, index) => {
+    antet.addEventListener("click", (e) => {
+        // Nu sortăm când utilizatorul redimensionează coloana.
+        if (e.target.closest(".redimensionare")) return;
+
+        const camp = campuriSortare[index];
+
+        if (coloanaSortare === camp) {
+            sortareCrescatoare = !sortareCrescatoare;
+        } else {
+            coloanaSortare = camp;
+            sortareCrescatoare = true;
+        }
+
+        for (const element of antete) {
+            element.removeAttribute("aria-sort");
+        }
+
+        antet.setAttribute(
+            "aria-sort",
+            sortareCrescatoare ? "ascending" : "descending"
+        );
+
+        afiseazaCereri();
+    });
+});
 
 antete.forEach((antet, index) => {
     const maner = document.createElement("span");
