@@ -157,3 +157,15 @@ tbody tr:nth-child(even) {
   gap: 8px;
   margin-left: auto;
 }
+
+th {
+  cursor: pointer;
+}
+
+th[aria-sort="ascending"]::after {
+  content: " ▲";
+}
+
+th[aria-sort="descending"]::after {
+  content: " ▼";
+}
